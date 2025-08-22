@@ -18,6 +18,7 @@ public class ReadFile
                 File.WriteAllText(dst, content);
 
                 // Change permissions so anyone can read it
+                // aaaaaaaaaa
                 System.Diagnostics.Process.Start("chmod", "644 " + dst);
 
                 Console.WriteLine("[*] Copied " + src + " to " + dst);
